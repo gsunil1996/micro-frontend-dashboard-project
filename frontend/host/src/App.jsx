@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import Progress from './components/Progress';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveToken } from './redux/features/tokenSlice';
+import PersistLoginComponent from './components/PersistLoginComponent';
 
 const AuthLazy = lazy(() => import('./components/AuthApp'));
 const HomeLazy = lazy(() => import('./components/HomeApp'));
@@ -29,19 +30,33 @@ const App = () => {
     };
   }, []);
 
-  console.log("checkToken", token)
+  // console.log("checkToken", token)
 
   return (
-    <Router history={history}>
-      <Suspense fallback={<Progress />}>
-        <Switch>
-          <Route path="/auth">
-            <AuthLazy />
-          </Route>
-          <Route path="/" component={HomeLazy} />
-        </Switch>
-      </Suspense>
-    </Router>
+    <>
+      <PersistLoginComponent />
+      <Router history={history}>
+        <Suspense fallback={<Progress />}>
+          <Switch>
+            <Route path="/auth">
+              <AuthLazy />
+            </Route>
+            {/* private routes */}
+
+            {/* <Route
+            path="/"
+            render={(props) => (
+              <PersistLogin {...props} >
+                <HomeLazy />
+              </PersistLogin>
+            )}
+          /> */}
+
+            <Route path="/" component={HomeLazy} />
+          </Switch>
+        </Suspense>
+      </Router>
+    </>
   )
 }
 

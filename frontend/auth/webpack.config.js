@@ -70,6 +70,7 @@ module.exports = (_, argv) => ({
       remotes: {},
       exposes: {
         "./AuthApp": "./src/bootstrap",
+        "./PersistLoginComp": "./src/components/PersistLogin",
       },
       shared: {
         ...deps,
